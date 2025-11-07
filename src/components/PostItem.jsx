@@ -1,26 +1,24 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import MyButton from "./UI/button/MyButton";
 
+// Оборачиваем в forwardRef — это нужно для работы CSSTransition без findDOMNode
+const PostItem = forwardRef((props, ref) => {
+  const { post, number, remove } = props;
 
-const PostItem = (props) => {
-  
   return (
-    <div className="App">
-      <div className="post">
-        <div className="post__content">
-          <strong>{props.number}. {props.post.title}</strong>
-          <div>
-            {props.post.body}
-          </div>
-        </div>
-        <div className="post__bths">
-          <MyButton onClick={() => props.remove(props.post)}>
-            Удалить
-            </MyButton>
-        </div>
+    <div ref={ref} className="post">
+      <div className="post__content">
+        <strong>
+          {number}. {post.title}
+        </strong>
+        <div>{post.body}</div>
+      </div>
+      <div className="post__btns">
+        <MyButton onClick={() => remove(post)}>Удалить</MyButton>
       </div>
     </div>
   );
-};
+});
 
 export default PostItem;
+

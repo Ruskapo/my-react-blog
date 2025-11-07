@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo } from "react";
+import React, { useState, useRef, useMemo, useEffect } from "react";
 import Counter from "./components/Counter";
 import ClassCounter from "./components/ClassCounter";
 import "./styles/App.css";
@@ -10,36 +10,30 @@ import PostForm from "./components/PostForm";
 import MySelect from "./components/UI/select/MySelect";
 import PostFilter from "./components/PostFilter";
 import MyModal from "./components/UI/MyModal/MyModal";
+import { usePosts } from "./hooks/usePosts";
+import axios from "axios";
+import PostService from "./components/API/PostService";
+import Loader from "./components/UI/Loader/Loader";
+import { useFetching } from "./hooks/useFetching";
 
 function App() {
-  const [posts, setPosts] = useState([
-    { id: 1, title: "JavaScript", body: "Decription" },
-    { id: 2, title: "JavaScript 2", body: "Decription" },
-    { id: 3, title: "JavaScript 3", body: "Decription" },
-  ]);
+  const [posts, setPosts] = useState([]);
 
   const [filter, setFilter] = useState({ sort: "", query: "" });
+  const [modal, setModal] = useState(false);
+  const sortedAndSearchedPost = usePosts(posts, filter.post, filter.query);
+  const [fetchPosts, isPostsLoading, postError] = useFetching(async () => {
+    const posts = await PostService.getAll();
+    setPosts(posts);
+  });
 
-  const [modal, setModal] = useState(false)
-
-  const sortedPosts = useMemo(() => {
-    if (filter.sort) {
-      return [...posts].sort((a, b) =>
-        a[filter.sort].localeCompare(b[filter.sort])
-      );
-    }
-    return posts;
-  }, [filter.sort, posts]);
-
-  const sortedAndSearchedPost = useMemo(() => {
-    return sortedPosts.filter((post) =>
-      post.title.toLowerCase().includes(filter.query.toLowerCase())
-    );
-  }, [filter.query, sortedPosts]);
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost]);
-    setModal(false)
+    setModal(false);
   };
 
   const removePost = (post) => {
@@ -48,24 +42,31 @@ function App() {
 
   return (
     <div className="App">
-      <MyButton style={{marginTop:30}} onClick={() => setModal(true)}>
+      <button onClick={fetchPosts}>GET POST</button>
+      <MyButton style={{ marginTop: 30 }} onClick={() => setModal(true)}>
         Создать пользователя
       </MyButton>
       <MyModal visible={modal} setVisible={setModal}>
         <PostForm create={createPost}></PostForm>
-        
       </MyModal>
-      
+
       <hr style={{ margin: "15px 8" }} />
       <PostFilter filter={filter} setFilter={setFilter} />
-      {sortedAndSearchedPost.length !== 0 ? (
+
+      {postError && <h1>Произошла ошибка ${postError}</h1>}
+
+      {isPostsLoading ? (
+        <div
+          style={{ display: "flex", justifyContent: "center", marginTop: 50 }}
+        >
+          <Loader />
+        </div>
+      ) : (
         <PostList
           remove={removePost}
           posts={sortedAndSearchedPost}
           title="Посты про JS"
         />
-      ) : (
-        <h1 style={{ textAlign: "center" }}>Посты не были найдены!</h1>
       )}
     </div>
   );
