@@ -9,7 +9,7 @@ const PostItem = forwardRef((props, ref) => {
     <div ref={ref} className="post">
       <div className="post__content">
         <strong>
-          {number}. {post.title}
+          {props.post.id}. {props.post.title}
         </strong>
         <div>{post.body}</div>
       </div>
