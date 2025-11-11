@@ -19,7 +19,7 @@ const PostForm = ({create}) => {
 
   return (
     <form>
-      {/* Управляйемые компоненты */}
+     
       <MyInput
         value={post.title}
         onChange={e => setPost({...post, title: e.target.value})}
@@ -27,7 +27,7 @@ const PostForm = ({create}) => {
         placeholder="Название поста"
       ></MyInput>
 
-      {/* Неуправляймые\Неконтролируемый компоненты */}
+     
       <MyInput
         value={post.body}
         onChange={e => setPost({...post, body: e.target.value})}

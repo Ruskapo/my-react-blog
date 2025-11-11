@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 100px); /* отступ под navbar */
+  min-height: calc(100vh - 100px); 
   background-color: #121212;
   color: #e4e4e4;
   text-align: center;

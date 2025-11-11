@@ -1,4 +1,4 @@
-/* src/styles/theme.css */
+
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
 
 :root {
@@ -71,7 +71,7 @@ a:hover {
   }
 }
 
-/* small helpers */
+
 .center {
   display: flex;
   align-items: center;

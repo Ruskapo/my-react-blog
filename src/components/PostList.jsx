@@ -3,7 +3,7 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import PostItem from "./PostItem";
 
 const PostList = ({ posts = [], title, remove }) => {
-  // Храним по ref на каждый пост, чтобы передавать в CSSTransition nodeRef
+
   const refs = useRef(new Map());
   const getNodeRef = (id) => {
     if (!refs.current.has(id)) {
@@ -31,7 +31,7 @@ const PostList = ({ posts = [], title, remove }) => {
                 timeout={500}
                 classNames="post"
               >
-                {/* ref уходит в корневой div внутри PostItem (через forwardRef) */}
+              
                 <PostItem
                   ref={nodeRef}
                   remove={remove}

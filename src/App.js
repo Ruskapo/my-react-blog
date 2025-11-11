@@ -11,7 +11,7 @@ export default function App() {
 
   useEffect(() => {
     setIsAuth(localStorage.getItem("auth") === "true");
-    setIsLoading(false);           // <<< ВАЖНО: снимаем «инициализацию»
+    setIsLoading(false);           
   }, []);
 
   return (
