@@ -1,19 +1,35 @@
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import Navbar from "./components/UI/Navbar/Navbar";
-import About from "./pages/About";
-import Posts from "./pages/Posts";
-import Error from "./pages/Error";
+import { BrowserRouter } from "react-router-dom";
 import AppRouter from "./components/UI/AppRouter";
-import PostIdPage from "./pages/PostIdPage";
+import Navbar from "./components/UI/Navbar/Navbar";
 import "./styles/App.css";
+import { useEffect, useState } from "react";
+import { AuthContext } from "./components/context/context";
 
 function App() {
+  const [isAuth, setIsAuth] = useState(false);
+  const [isLoading, setLoading] = useState(true);
+
+
+  useEffect(() => {
+    if(localStorage.getItem('auth')) {
+      setIsAuth(true)
+    }
+    setLoading(false);
+  }, [])
+
+
   return (
-    <BrowserRouter>
-      <Navbar />
-      <AppRouter />
-      
-    </BrowserRouter>
+    <AuthContext.Provider value={{
+      isAuth,
+      setIsAuth,
+      isLoading
+
+    }}>
+      <BrowserRouter>
+        <Navbar />
+        <AppRouter />
+      </BrowserRouter>
+    </AuthContext.Provider>
   );
 }
 
