@@ -37,7 +37,6 @@
 
 .post-exit {
   opacity: 1;
-  
 }
 
 .post-exit-active {
@@ -45,7 +44,6 @@
   transform: translateX(-350px);
   transition: all 500ms ease-out;
 }
-
 
 .page__wrapper {
   margin-top: 30px;
@@ -58,22 +56,54 @@
   cursor: pointer;
 }
 
-
 .page__current {
   border: 2px solid orange;
   font-weight: bold;
 }
 
-
 .navbar {
-  height: 50px;
-  width: 100vw;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(14, 15, 18, 0.6);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.navbar__inner {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 12px 24px;
   display: flex;
+  gap: 16px;
   align-items: center;
-  padding: 0 15px;
-  background: lightgray;
+  justify-content: space-between;
+}
+.brand {
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+.nav {
+  display: flex;
+  gap: 14px;
 }
 
-.navbar__links {
-  margin-left: auto;
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+}
+.loader-ring {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 3px solid var(--panel-2);
+  border-top-color: var(--brand);
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

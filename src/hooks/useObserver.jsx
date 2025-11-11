@@ -1,7 +1,4 @@
-import { useEffect } from "react";
-import { useRef } from "react";
-
-
+import { useEffect, useRef } from "react";
 
 export const useObserver = (ref, canLoad, isLoading, callback) => {
   const observer = useRef();
@@ -9,12 +6,16 @@ export const useObserver = (ref, canLoad, isLoading, callback) => {
   useEffect(() => {
     if (isLoading) return;
     if (observer.current) observer.current.disconnect();
-    var cb = function (entries, observer) {
+
+    const cb = (entries) => {
       if (entries[0].isIntersecting && canLoad) {
-        callback()
+        callback();
       }
     };
+
     observer.current = new IntersectionObserver(cb);
-    observer.current.observe(ref.current);
-  }, [isLoading]);
+    if (ref.current) observer.current.observe(ref.current);
+
+    return () => observer.current?.disconnect();
+  }, [isLoading, canLoad, ref, callback]);
 };

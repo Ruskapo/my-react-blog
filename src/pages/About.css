@@ -1,0 +1,37 @@
+.about-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 100px); /* отступ под navbar */
+  background-color: #121212;
+  color: #e4e4e4;
+  text-align: center;
+}
+
+.about-content {
+  max-width: 700px;
+  padding: 40px;
+  background: #1e1e1e;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.about-content:hover {
+  transform: scale(1.02);
+}
+
+.about-content h1 {
+  font-size: 2rem;
+  margin-bottom: 16px;
+  color: #ffffff;
+  border-bottom: 2px solid #0078ff;
+  display: inline-block;
+  padding-bottom: 6px;
+}
+
+.about-content p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #bdbdbd;
+}

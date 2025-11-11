@@ -1,0 +1,36 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.navbar__brand {
+  font-weight: 800;
+  letter-spacing: .3px;
+}
+
+.navbar__links {
+  display: flex;
+  gap: 16px;
+}
+
+.navbar__actions {
+  margin-left: auto;       
+  gap: 10px;
+}
+
+.navbar__logo {
+  font-size: 22px;
+  font-weight: 700;
+  color: #61dafb;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.navbar__logo:hover {
+  color: #90e0ef;
+}
+
+

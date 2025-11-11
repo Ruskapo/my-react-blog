@@ -1,28 +1,26 @@
-import React, { useContext } from 'react'
-import MyInput from '../components/UI/input/MyInput'
-import MyButton from '../components/UI/button/MyButton'
-import { AuthContext } from '../components/context/context'
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/context";
 
-const Login = () => {
-  const {isAuth, setIsAuth} = useContext(AuthContext);
+export default function Login() {
+  const { setIsAuth } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const login = event => {
-    event.preventDefault();
+  const onSubmit = (e) => {
+    e.preventDefault();
     setIsAuth(true);
-    localStorage.setItem('auth', 'true' )
-  }
-
+    localStorage.setItem("auth", "true");
+    navigate("/posts", { replace: true });
+  };
 
   return (
-    <div>
-        <h1>Страница для логина</h1>
-        <form onSubmit={login}>
-            <MyInput type='text' placeholder="Введите логин"></MyInput>
-            <MyInput type='password' placeholder="Введите пароль"></MyInput>
-            <MyButton>Войти</MyButton>
-        </form>
+    <div style={{ maxWidth: 360, margin: "40px auto" }}>
+      <h1>Вход</h1>
+      <form onSubmit={onSubmit}>
+        <input style={{ width: "100%", marginBottom: 12 }} placeholder="Логин" />
+        <input style={{ width: "100%", marginBottom: 12 }} placeholder="Пароль" type="password" />
+        <button className="btn btn--brand" type="submit">Войти</button>
+      </form>
     </div>
-  )
+  );
 }
-
-export default Login

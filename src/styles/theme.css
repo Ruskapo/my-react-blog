@@ -1,0 +1,82 @@
+/* src/styles/theme.css */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+
+:root {
+  --bg: #0e0f12;
+  --panel: #16181d;
+  --panel-2: #1c1f26;
+  --text: #e9edf1;
+  --muted: #a7b0bb;
+  --brand: #6aa6ff;
+  --brand-2: #4a8df7;
+  --border: #262a33;
+  --success: #3ecf8e;
+  --danger: #ef5350;
+  --warn: #ffb020;
+  --radius: 14px;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+    sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 20px 0;
+}
+
+a {
+  color: var(--brand);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--brand-2);
+}
+
+.page-title {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  margin: 12px 0 18px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 720px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* small helpers */
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.muted {
+  color: var(--muted);
+}
