@@ -1,70 +1,149 @@
-# Getting Started with Create React App
+# React Journal — учебный мини‑блог на React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> Небольшое приложение, с которым я прошёл введение в React: маршрутизация, работа с API, кастомные хуки, контекст, пагинация, бесконечная лента и базовая архитектура компонентов.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+##  Возможности
 
-### `npm start`
+*  **Страницы**: Главная (`/`), Посты (`/posts`), О сайте (`/about`), Детальная поста (`/posts/:id`).
+*  **Маршрутизация** на `react-router-dom@6` (`Routes`, `Route`, `Navigate`, `useParams`, `useNavigate`).
+*  **Загрузка данных** с JSONPlaceholder (`/posts`).
+*  **Фильтрация, поиск и сортировка** постов.
+*  **Пагинация** + **бесконечная лента** (IntersectionObserver).
+*  **Кастомные хуки**: `useFetching`, `useObserver`.
+*  **Контекст авторизации** (демо): показ навигации/кнопок в зависимости от состояния.
+*  **UI‑компоненты**: кнопки, инпуты, селекты, модалки, лоадер.
+*  **Базовая тёмная тема** и современная типографика.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+##  Технический стек
 
-### `npm test`
+* **React 18**
+* **react-router-dom 6**
+* **Axios** для HTTP
+* Встроенный CSS (модульная структура директорий)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+##  Быстрый старт
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+# 1) Установка зависимостей
+npm install
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# 2) Запуск дев-сервера
+npm start
+# ➜ откроется http://localhost:3000
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# 3) Сборка продакшен-бандла (не нужна для локальной разработки)
+npm run build
+```
 
-### `npm run eject`
+API: используется открытый сервис **[https://jsonplaceholder.typicode.com](https://jsonplaceholder.typicode.com)** (ресурс `/posts`).
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+##  Структура проекта (основное)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+src/
+├─ components/
+│  ├─ API/
+│  │  └─ PostService.js        # Запросы к API (getAll, getById)
+│  ├─ UI/
+│  │  ├─ AppRouter.jsx         # Конфигурация роутов
+│  │  ├─ Navbar/
+│  │  │  ├─ Navbar.jsx
+│  │  │  └─ Navbar.css
+│  │  ├─ button/MyButton.jsx   # Кнопка и стили
+│  │  ├─ input/MyInput.jsx
+│  │  ├─ select/MySelect.jsx
+│  │  ├─ modal/MyModal.jsx
+│  │  └─ Loader/Loader.jsx
+│  ├─ PostItem.jsx             # Карточка поста
+│  └─ PostList.jsx             # Список постов
+├─ context/
+│  └─ context.js               # AuthContext (демо-авторизация)
+├─ hooks/
+│  ├─ useFetching.js           # Обёртка над async запросом (loading/error)
+│  └─ useObserver.jsx          # Бесконечная лента (IntersectionObserver)
+├─ pages/
+│  ├─ About.jsx
+│  ├─ Error.jsx
+│  ├─ PostIdPage.jsx           # Детальная страница поста
+│  └─ Posts.jsx                # Лента постов с фильтрами/пагинацией
+├─ router/
+│  └─ routes.js                # Описание публичных/приватных роутов (если нужно)
+├─ styles/
+│  └─ App.css
+├─ App.js
+└─ index.js
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## Основные места в коде
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+* **Точка смены заголовков/навигации**: `components/UI/Navbar/Navbar.jsx` и `App.js`.
+* **Главный роутер**: `components/UI/AppRouter.jsx`.
+* **Текст на главной** (секция «О сайте»): `pages/About.jsx`.
+* **Логика постов**: `pages/Posts.jsx` + `components/API/PostService.js`.
+* **Инфинит‑скролл**: хук `hooks/useObserver.jsx` (подписка на последний элемент списка).
+* **Контекст авторизации**: `context/context.js` (демо‑режим: локальное состояние).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+##  Скрипты npm
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```json
+{
+  "start": "react-scripts start",
+  "build": "react-scripts build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject"
+}
+```
 
-### Analyzing the Bundle Size
+* `npm start` — локальная разработка с HMR.
+* `npm run build` — оптимизированная сборка для деплоя.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## Как проверить ключевой функционал
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. **Переходы по страницам**: меню в шапке (Посты / О сайте).
+2. **Поиск/сортировка**: поле ввода и селект над лентой.
+3. **Пагинация**: выпадающий лимит и переходы по страницам.
+4. **Бесконечная лента**: прокрутите вниз — догрузятся новые посты.
+5. **Детальная поста**: клик по «Открыть» в карточке.
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+##  Дорожная карта (ideas / TODO)
 
-### Deployment
+* [ ] Перевести стили на CSS‑modules или Tailwind.
+* [ ] Добавить форму создания поста с валидацией.
+* [ ] Перевести фейковую авторизацию на реальный backend.
+* [ ] Добавить тесты для хуков и компонентов.
+* [ ] Настроить ESLint/Prettier и GitHub Actions.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
+## Вклад
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+PRs и идеи приветствуются. Держим код в чистоте: понятные имена, небольшие компоненты, осмысленные коммиты.
+
+---
+
+## Лицензия
+
+MIT — делайте форки, изучайте, экспериментируйте.
+
+---
+
+
+### Автор
+
+Саша (Alexander) — мой первый учебный React‑проект. Спасибо за просмотр! 
